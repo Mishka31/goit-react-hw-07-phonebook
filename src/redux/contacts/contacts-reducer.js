@@ -1,15 +1,25 @@
 import { combineReducers } from "redux";
 import { createReducer } from "@reduxjs/toolkit";
-// import types from "./contacts-type.js";
-
 import actions from "./contacts-actions.js";
 
+const {
+  fetchRequest,
+  fetchSuccess,
+  fetchError,
+  addRequest,
+  addSuccess,
+  addError,
+  changeFilter,
+  deleteSuccess,
+  deleteError,
+  deleteRequest,
+} = actions;
+
 const items = createReducer([], {
-  [actions.addContact]: (state, { payload }) => {
+  [fetchSuccess]: (_, { payload }) => payload,
+  [addSuccess]: (state, { payload }) => {
     const payloadLowerCase = payload.name.toLowerCase();
-    const findItem = state.find(
-      (contact) => contact.name.toLowerCase() === payloadLowerCase
-    );
+    const findItem = state.find((contact) => contact.name.toLowerCase() === payloadLowerCase);
     if (findItem) {
       alert(`${findItem.name} is already in contacts`);
       return state;
@@ -18,47 +28,27 @@ const items = createReducer([], {
     }
   },
 
-  [actions.deleteContact]: (state, { payload }) =>
-    state.filter(({ id }) => id !== payload),
+  [deleteSuccess]: (state, { payload }) => state.filter(({ id }) => id !== payload),
 });
 
-// const items = (
-//   state = [
-// {
-//   id: "c2cc433e-97d2-4fa7-b9eb-12a98511c9ab",
-//   name: "Misha Krasnonos",
-//   number: "000-00-11-11",
-// },
-//   ],
-//   { type, payload }
-// ) => {
-//   switch (type) {
-//     case types.ADDSUBMIT:
-//       return [...state, payload];
-
-//     case types.DELETE:
-//       return state.filter(({ id }) => id !== payload);
-
-//     default:
-//       return state;
-//   }
-// };
+const loading = createReducer(false, {
+  [fetchRequest]: () => true,
+  [fetchSuccess]: () => false,
+  [fetchError]: () => false,
+  [addRequest]: () => true,
+  [addSuccess]: () => false,
+  [addError]: () => false,
+  [deleteRequest]: () => true,
+  [deleteSuccess]: () => false,
+  [deleteError]: () => false,
+});
 
 const filter = createReducer("", {
-  [actions.changeFilter]: (_, { payload }) => payload,
+  [changeFilter]: (_, { payload }) => payload,
 });
-
-// const filter = (state = "", { type, payload }) => {
-//   switch (type) {
-//     case types.FIND:
-//       return payload;
-
-//     default:
-//       return state;
-//   }
-// };
 
 export default combineReducers({
   items,
   filter,
+  loading,
 });

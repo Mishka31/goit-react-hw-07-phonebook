@@ -1,23 +1,19 @@
 import { connect } from "react-redux";
 import actions from "../../redux/contacts/contacts-actions.js";
 import s from "./Filter.module.css";
+import contactSelectors from "../../redux/contacts/contacts-selector.js";
 
 function Find({ value, onSearch }) {
   return (
     <div className={s.container}>
       <p className={s.title}>Find contacts by name:</p>
-      <input
-        type="text"
-        value={value}
-        onChange={onSearch}
-        className={s.imput}
-      ></input>
+      <input type="text" value={value} onChange={onSearch} className={s.imput}></input>
     </div>
   );
 }
 
 const mapStateToProps = (state) => ({
-  value: state.contacts.filter,
+  value: contactSelectors.getFilter(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

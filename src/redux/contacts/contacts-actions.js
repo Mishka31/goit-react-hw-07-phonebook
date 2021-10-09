@@ -1,32 +1,16 @@
 import { createAction } from "@reduxjs/toolkit";
-// import types from "./contacts-type.js";
-import { v4 as uuidv4 } from "uuid";
 
-const addContact = createAction(
-  "contact/submitHandler",
-  ({ name, number }) => ({
-    payload: {
-      id: uuidv4(),
-      name,
-      number,
-    },
-  })
-);
+const fetchRequest = createAction("contacts/fetchRequest");
+const fetchSuccess = createAction("contacts/fetchSucces");
+const fetchError = createAction("contacts/fetchError");
 
-// export const addContact = ({ name, number }) => ({
-//   type: types.ADDSUBMIT,
-//   payload: {
-//     id: uuidv4(),
-//     name,
-//     number,
-//   },
-// });
+const addRequest = createAction("contacts/addRequest");
+const addSuccess = createAction("contacts/addSucces");
+const addError = createAction("contacts/addError");
 
-const deleteContact = createAction("contact/delete");
-// export const deleteContact = (id) => ({
-//   type: types.DELETE,
-//   payload: id,
-// });
+const deleteRequest = createAction("contacts/deleteRequest");
+const deleteSuccess = createAction("contacts/deleteSucces");
+const deleteError = createAction("contacts/deleteError");
 
 const changeFilter = createAction("contact/find");
 // export const changeFilter = (value) => ({
@@ -35,4 +19,15 @@ const changeFilter = createAction("contact/find");
 // });
 
 // eslint-disable-next-line
-export default { addContact, deleteContact, changeFilter };
+export default {
+  addRequest,
+  addSuccess,
+  addError,
+  deleteSuccess,
+  deleteError,
+  deleteRequest,
+  changeFilter,
+  fetchRequest,
+  fetchSuccess,
+  fetchError,
+};

@@ -1,7 +1,8 @@
 import { connect } from "react-redux";
-import actions from "../../redux/contacts/contacts-actions.js";
+import operations from "../../redux/contacts/contacts-operations.js";
 import s from "./ContactList.module.css";
 import PropTypes from "prop-types";
+import selectors from "../../redux/contacts/contacts-selector.js";
 
 function ContactList({ contacts, onClick }) {
   return (
@@ -14,11 +15,7 @@ function ContactList({ contacts, onClick }) {
               <a className={s.number} href="tel:{contact.number}">
                 {contact.number}
               </a>
-              <button
-                className={s.button}
-                id={contact.id}
-                onClick={() => onClick(contact.id)}
-              >
+              <button className={s.button} id={contact.id} onClick={() => onClick(contact.id)}>
                 Delete
               </button>
             </li>
@@ -29,19 +26,16 @@ function ContactList({ contacts, onClick }) {
   );
 }
 
-const getVisibleContacts = (allContacts, filter) => {
-  const lowerFilter = filter.toLowerCase();
+// const getVisibleContacts = (allContacts, filter) => {
+//   const lowerFilter = filter.toLowerCase();
 
-  return allContacts.filter((contact) =>
-    contact.name.toLowerCase().includes(lowerFilter)
-  );
-};
-
-const mapStateToProps = ({ contacts: { items, filter } }) => ({
-  contacts: getVisibleContacts(items, filter),
+//   return allContacts.filter((contact) => contact.name.toLowerCase().includes(lowerFilter));
+// };
+const mapStateToProps = (state) => ({
+  contacts: selectors.getVisible(state),
 });
 const mapDispatchToProps = (dispatch) => ({
-  onClick: (id) => dispatch(actions.deleteContact(id)),
+  onClick: (id) => dispatch(operations.deleteContact(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactList);

@@ -1,3 +1,5 @@
+// import { createSelector } from "reselect";
+
 const getLoading = (state) => state.contacts.loading;
 const getFilter = (state) => state.contacts.filter;
 const getAllItems = (state) => state.contacts.items;

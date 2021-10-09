@@ -17,17 +17,7 @@ const {
 
 const items = createReducer([], {
   [fetchSuccess]: (_, { payload }) => payload,
-  [addSuccess]: (state, { payload }) => {
-    const payloadLowerCase = payload.name.toLowerCase();
-    const findItem = state.find((contact) => contact.name.toLowerCase() === payloadLowerCase);
-    if (findItem) {
-      alert(`${findItem.name} is already in contacts`);
-      return state;
-    } else {
-      return [...state, payload];
-    }
-  },
-
+  [addSuccess]: (state, { payload }) => [...state, payload],
   [deleteSuccess]: (state, { payload }) => state.filter(({ id }) => id !== payload),
 });
 

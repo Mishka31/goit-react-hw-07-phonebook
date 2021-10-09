@@ -1,7 +1,6 @@
 import { connect } from "react-redux";
 import operations from "../../redux/contacts/contacts-operations.js";
 import s from "./ContactList.module.css";
-import PropTypes from "prop-types";
 import selectors from "../../redux/contacts/contacts-selector.js";
 
 function ContactList({ contacts, onClick }) {
@@ -39,14 +38,3 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactList);
-
-ContactList.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-  onDelete: PropTypes.func,
-};
